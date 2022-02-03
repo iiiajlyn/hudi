@@ -178,19 +178,19 @@ function animAdd() {
 }
 
 //Активируем кнопки вперед назад красим пройденые пути а также где мы находимся
-//let btnNext = document.querySelector('.parameters-progress .btn_next'),
 let lineProgress = document.querySelector('.parameters-progress__line-activ'),
+    btnNext = document.querySelector('.btn-box .btn_next'),
     owlNext = document.querySelector('.owl-nav .owl-next'),
     owlPrev = document.querySelector('.owl-nav .owl-prev')
 owlNext.classList.add('disable')
 
-//btnNext.addEventListener('click', disableAdd)
+btnNext.addEventListener('click', disableAdd)
 owlNext.addEventListener('click', disableAdd)
 owlPrev.addEventListener('click', disableAdd)
 
 function disableAdd() {
     owlNext.classList.add('disable')
-    //btnNext.classList.add('disable')
+    btnNext.classList.add('disable')
 }
 //Шкала прогресса
 function progres() {
@@ -208,7 +208,10 @@ function progres() {
     lineProgress.style.width = hudiProgress + "%";
 
     if (progresOccupancy) {
-        finishBtn.classList.remove("disable")
+        //  finishBtn.classList.remove("disable")
+        btnNext.classList.add("none")
+        document.querySelector(".btn_ico_cart").classList.add("active")
+
     }
 }
 //Формирование цены
@@ -266,7 +269,7 @@ async function choiceActive() {
     }
     this.classList.add("active");
 
-    //btnNext.classList.remove("disable");
+    btnNext.classList.remove("disable");
     owlNext.classList.remove('disable');
     //Цвет
     if (attr == "color") {
@@ -450,6 +453,15 @@ async function choiceActive() {
     basePriceHTML();
     cookieAdd();
 }
+$('.parameters-box__head').on('translated.owl.carousel', function () {
+    let nextElem = document.querySelector(".owl-item.active.center").nextElementSibling.childNodes[0].getAttribute("data-hash")
+    if (!(nextElem == false)) {
+        btnNext.href = "#" + nextElem
+    } else {
+        btnNext.href = "#"
+    }
+    btnNext.classList.add("disable")
+})
 //Рандомные числа
 let numRandomArr = document.querySelectorAll(".choice__info-box .num-random"),
     numRandom = Math.floor(Math.random() * 17) + 8;
@@ -521,11 +533,17 @@ function modalDel() {
 }
 // Go to the next item
 
-$('.btn_next').click(clickNextNone);
+$('.btn_next').click(clickNext);
 $('.owl-nav .owl-next').click(clickNextNone);
 $('.owl-nav .owl-prev').click(clickPrevNone);
 
+function clickNext() {
+    $('.parameters-box__head').trigger('next.owl.carousel', [200]);
+    $('.parameters-box__main').trigger('next.owl.carousel', [200]);
+}
+
 function clickNextNone() {
+
     setTimeout(function () {
         if (document.querySelector(".owl-item.active.center").classList.contains("disable")) {
             $('.parameters-box__head').trigger('next.owl.carousel', [200]);

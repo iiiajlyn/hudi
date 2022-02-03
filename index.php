@@ -23,8 +23,11 @@
                     <div class="person"><img src='./img/ico-2.png' alt='img' srcset='./img/svg/ico-2.svg'></div>
                 </div>
                 <div class="hoodie-nav_bottom">
-                    <img src='./img/random.png' id="random-btn" alt='img' srcset='./img/svg/random.svg'>
-                    <div class="clue">?</div>
+                    <div id="random-btn">
+
+                        <p>Мне повезет</p>
+                    </div>
+                    <!-- <div class="clue">?</div> -->
                 </div>
                 <div class="title-choice title-anim">
                     <p><span></span> <b>Всего 10 простых шагов<br>и худи твое!</b></p>
@@ -49,12 +52,6 @@
                 </div>
             </div>
             <div class="constructor-hoodie__parameters">
-                <!-- <div class="parameters-progress">
-                    <div class="parameters-progress__line">
-                        <div class="parameters-progress__line-activ" style="width: 0%;"></div>
-                    </div>
-                    <a href="#cut" class="btn_next disable">Далее</a>
-                </div> -->
                 <div class="parameters-box">
                     <div class="parameters-box__head owl-carousel">
                         <a href="#color" class="item" data-hash="color">
@@ -638,7 +635,12 @@
                             </div>
                         </div>
                         <p class="price"><span>2 990</span><i> 14 990 ₽</i></p>
-                        <div class="btn_ico_cart disable" data-modal="form">В корзину</div>
+                        <div class="btn-box">
+                            <a href="#" class="btn_next disable">Далее</a>
+                            <div class="btn_ico_cart" data-modal="form">
+                                <p>В корзину</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -7,6 +7,11 @@
     background: $palete-light-second;
     box-sizing: border-box;
 
+    a {
+        color: $palete-base;
+        text-decoration: none;
+    }
+
     @media screen and (max-width: 350px) {
         font-size: $font-s;
     }
@@ -29,7 +34,6 @@
         list-style-type: none;
     }
 
-
     button.btn {
         border: 0;
 
@@ -51,6 +55,7 @@
         font-weight: 500;
         font-size: $font-m;
         border: 2px solid $palete-base;
+        white-space: nowrap;
 
         @media screen and (max-width: 350px) {
             font-size: $font-s;
@@ -90,17 +95,27 @@
                 text-decoration: none;
             }
 
-            &[class*=_cart] {
-                &::after {
-                    content: "";
-                    height: 0px;
-                    display: block;
-                    position: absolute;
-                    background-image: url("../img/finish.png");
-                    background-image: url("../img/finish.webp");
-                    transition: $transition;
-                }
-            }
+            // &[class*=_cart] {
+            //     p {
+            //         display: none;
+            //     }
+
+            //     &::after {
+            //         content: "";
+            //         height: 0px;
+            //         display: block;
+            //         position: absolute;
+            //         background-image: url("../img/finish.png");
+            //         background-image: url("../img/finish.webp");
+            //         transition: $transition;
+            //         display: none;
+            //     }
+
+            //     p {
+            //         display: block;
+            //     }
+
+            // }
         }
 
         &[class*=_ico] {
@@ -119,26 +134,71 @@
         &[class*=_cart] {
             position: relative;
 
+            p {
+                display: none;
+            }
+
             &::before {
                 background-image: url("../img/shopping-bag.png");
                 background-image: url("../img/svg/shopping-bag.svg");
+                padding: 0;
+                margin: 0;
             }
 
-            &::after {
-                content: "";
-                width: 50px;
-                height: 50px;
-                display: block;
-                position: absolute;
-                background-image: url("../img/finish.png");
-                background-image: url("../img/finish.webp");
-                top: -37px;
-                left: calc(50% - 25px);
-                background-size: contain;
-                background-position: 50% 50%;
-                background-repeat: no-repeat;
-                transition: $transition;
+            &.active {
+                &::after {
+                    content: "";
+                    width: 50px;
+                    height: 50px;
+                    display: block;
+                    position: absolute;
+                    background-image: url("../img/finish.png");
+                    background-image: url("../img/finish.webp");
+                    top: -37px;
+                    left: calc(50% - 25px);
+                    background-size: contain;
+                    background-position: 50% 50%;
+                    background-repeat: no-repeat;
+                    transition: $transition;
+                }
+
+                p {
+                    display: block;
+                }
             }
+        }
+    }
+
+    #random-btn {
+        display: flex;
+        background-color: $palete-light-second;
+        font-weight: 600;
+        padding: 15px 20px;
+        border-right: $radius;
+        cursor: pointer;
+        background-image: url("../img/random.png");
+        background-image: url("../img/svg/random.svg");
+        padding-left: 45px;
+        background-position: 5px 50%;
+        background-repeat: no-repeat;
+        background-size: 40px;
+        border-radius: $radius;
+        transition: $transition;
+        margin-bottom: 10px;
+
+        @media screen and (max-width: 1000px) {
+            margin-bottom: 10px;
+            padding: 20px;
+            background-position: center;
+            background-color: transparent;
+
+            p {
+                display: none;
+            }
+        }
+
+        &:hover {
+            box-shadow: 5px 5px 10px transparentize($palete-dark, 0.95);
         }
     }
 
@@ -196,7 +256,6 @@
         z-index: 10;
 
         @media screen and (max-width: 1000px) {
-            bottom: -35px;
             left: -27px;
             margin-bottom: 0;
         }
@@ -226,7 +285,7 @@
 
         @media screen and (max-width: 1000px) {
             width: 100%;
-            height: calc(100% - 300px);
+            height: calc(100% - 265px);
             display: flex;
         }
 
@@ -254,6 +313,8 @@
             width: 100%;
             opacity: 0;
             z-index: 10;
+            display: flex;
+            margin-left: 26px;
 
             &.title-anim {
                 animation: title-anim 3s normal forwards ease-in-out;
@@ -497,7 +558,6 @@
                     }
                 }
             }
-
 
             &__head {
                 padding: 14px;
@@ -1037,7 +1097,6 @@
                         justify-content: flex-end;
                         overflow: hidden;
 
-
                         @media screen and (max-width: 1000px) {
                             display: none
                         }
@@ -1111,7 +1170,6 @@
                                 text-align: center;
                                 position: relative;
 
-
                                 @media screen and (max-width: 1000px) {
                                     width: 100%;
                                     min-width: 110px;
@@ -1148,10 +1206,11 @@
                             padding: 5px;
                             background-color: transparentize($palete-dark, $amount: 0.7);
                             color: $palete-light;
-                            align-items: center;
+                            align-items: flex-start;
                             justify-content: center;
                             border-radius: $radius;
                             flex-direction: column;
+                            text-align: left;
 
                             p {
                                 font-weight: 600;
@@ -1200,6 +1259,20 @@
                     margin: 0 15px;
                 }
 
+                .btn-box {
+                    display: flex;
+
+                    .btn_next {
+                        @media screen and (max-width: 1000px) {
+                            display: none;
+                        }
+                    }
+
+                    a {
+                        margin-right: 10px;
+                    }
+                }
+
                 .price {
                     font-size: $font-x;
                     font-weight: 500;
@@ -1224,7 +1297,6 @@
             }
         }
     }
-
 
     .modal {
         $this: &;
@@ -1392,7 +1464,6 @@
                         }
                     }
 
-
                     &__box {
                         height: 130px;
 
@@ -1462,7 +1533,6 @@
                 }
             }
         }
-
 
         @keyframes anim-opacity-add {
             0% {
@@ -1609,6 +1679,7 @@
                     display: flex;
                     justify-content: center;
                     margin-top: 20px;
+                    white-space: nowrap;
 
                     @media screen and (max-width: 1000px) {
                         bottom: 0;
@@ -1693,9 +1764,6 @@
             }
         }
 
-
-
-
     }
 
     .submit-modal {
@@ -1728,7 +1796,6 @@
         p {
             padding: 10px 0;
         }
-
 
         button,
         a {
