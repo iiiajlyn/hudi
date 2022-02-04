@@ -565,9 +565,6 @@
                                     <li data-item="L">
                                         <p>l</p>
                                     </li>
-                                    <li data-item="X">
-                                        <p>x</p>
-                                    </li>
                                     <li data-item="XL">
                                         <p>xl</p>
                                     </li>
@@ -624,9 +621,6 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="choice" data-hash="finish">
-
-                        </div>
                     </div>
                     <div class="parameters-box__footer">
                         <div class="parameters-progress">
@@ -636,8 +630,8 @@
                         </div>
                         <p class="price"><span>2 990</span><i> 14 990 ₽</i></p>
                         <div class="btn-box">
-                            <a href="#" class="btn_next disable">Далее</a>
-                            <div class="btn_ico_cart" data-modal="form">
+                            <div id="btn_next" class="btn_next">Далее</div>
+                            <div class="btn_ico_cart disable" data-modal="form">
                                 <p>В корзину</p>
                             </div>
                         </div>

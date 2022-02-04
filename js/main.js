@@ -184,13 +184,13 @@ let lineProgress = document.querySelector('.parameters-progress__line-activ'),
     owlPrev = document.querySelector('.owl-nav .owl-prev')
 owlNext.classList.add('disable')
 
-btnNext.addEventListener('click', disableAdd)
+//btnNext.addEventListener('click', disableAdd)
 owlNext.addEventListener('click', disableAdd)
 owlPrev.addEventListener('click', disableAdd)
 
 function disableAdd() {
     owlNext.classList.add('disable')
-    btnNext.classList.add('disable')
+    // btnNext.classList.add('disable')
 }
 //Шкала прогресса
 function progres() {
@@ -209,8 +209,11 @@ function progres() {
 
     if (progresOccupancy) {
         //  finishBtn.classList.remove("disable")
-        btnNext.classList.add("none")
-        document.querySelector(".btn_ico_cart").classList.add("active")
+        btnNext.classList.add("none");
+
+        let btnCart = document.querySelector(".btn_ico_cart");
+        btnCart.classList.add("active")
+        btnCart.classList.remove("disable")
 
     }
 }
@@ -275,7 +278,7 @@ async function choiceActive() {
     if (attr == "color") {
         choiceElem[attr] = [item, title, true, price];
         style = document.querySelector('style');
-        style.innerHTML = `.color-shadow-dark, .color-shadow, .color-base {fill: ${choiceElem[attr][0]}; stroke: ${choiceElem[attr][0]};}`;
+        style.innerHTML = `.color-shadow-dark, .color-shadow, .color-base {fill: ${choiceElem[attr][0]} !important; stroke: ${choiceElem[attr][0]} !important;}`;
         choiceTitle("Цвет: ", choiceElem[attr][1]);
 
     }
@@ -453,15 +456,15 @@ async function choiceActive() {
     basePriceHTML();
     cookieAdd();
 }
-$('.parameters-box__head').on('translated.owl.carousel', function () {
-    let nextElem = document.querySelector(".owl-item.active.center").nextElementSibling.childNodes[0].getAttribute("data-hash")
-    if (!(nextElem == false)) {
-        btnNext.href = "#" + nextElem
-    } else {
-        btnNext.href = "#"
-    }
-    btnNext.classList.add("disable")
-})
+// $('.parameters-box__head').on('translated.owl.carousel', function () {
+//     let nextElem = document.querySelector(".owl-item.active.center").nextElementSibling.childNodes[0].getAttribute("data-hash")
+//     if (!(nextElem == false)) {
+//         btnNext.href = "#" + nextElem
+//     } else {
+//         btnNext.href = "#"
+//     }
+//     // btnNext.classList.add("disable")
+// })
 //Рандомные числа
 let numRandomArr = document.querySelectorAll(".choice__info-box .num-random"),
     numRandom = Math.floor(Math.random() * 17) + 8;
@@ -538,8 +541,16 @@ $('.owl-nav .owl-next').click(clickNextNone);
 $('.owl-nav .owl-prev').click(clickPrevNone);
 
 function clickNext() {
-    $('.parameters-box__head').trigger('next.owl.carousel', [200]);
-    $('.parameters-box__main').trigger('next.owl.carousel', [200]);
+    let slide = document.querySelector(".owl-item.active.center").children[0]
+    if (slide.dataset.hash == "growth") {
+        btnNext.classList.add("none");
+        let btnCart = document.querySelector(".btn_ico_cart");
+        btnCart.classList.add("active")
+        btnCart.classList.remove("disable")
+    } else {
+        $('.parameters-box__head').trigger('next.owl.carousel', [200]);
+        $('.parameters-box__main').trigger('next.owl.carousel', [200]);
+    }
 }
 
 function clickNextNone() {
@@ -587,7 +598,7 @@ async function startHudi() {
 
     //собираем svg
     let style = document.querySelector('style');
-    style.innerHTML = `.color-shadow-dark, .color-shadow, .color-base {fill: ${choiceElem["color"][0]}; stroke: ${choiceElem["color"][0]};}`;
+    style.innerHTML = `.color-shadow-dark, .color-shadow, .color-base {fill: ${choiceElem["color"][0]} !important; stroke: ${choiceElem["color"][0]} !important;}`;
     let bottomItem = await fetch(`./img/svg/gerl/${choiceElem["cut"][0]}/bottom/${choiceElem["length"][0]}/${choiceElem["bottom"][0]}.svg`),
         lengthItem = await fetch(`./img/svg/gerl/${choiceElem["cut"][0]}/length/${choiceElem["length"][0]}.svg`),
         pocketItem = await fetch(`./img/svg/gerl/${choiceElem["cut"][0]}/pocket/${choiceElem["pocket"][0]}.svg`),
@@ -676,6 +687,9 @@ function randomHudi() {
         if (choiceElem[key]) {
             for (let index = 0; index < choiceElem[key].length; index++) {
                 choiceElem[key][index] = element[randomNum][index]
+                if (index == 2) {
+                    choiceElem[key][index] = true
+                }
             }
         }
     }
@@ -705,7 +719,7 @@ function nextColor() {
         if (colorItem[0] == colorArr[index][0]) {
             if (index == (colorArr.length - 1)) {
                 for (let i = 0; i < colorItem.length; i++) {
-                    return colorItem[i] = colorArr[0][i]
+                    colorItem[i] = colorArr[0][i]
                 }
                 break
 
@@ -745,3 +759,50 @@ function choiceImginfoAdd() {
 function choiceImginfoDel() {
     this.removeChild(choiceImgInfo)
 }
+//-----
+function calc_total(length, summa) {
+
+    if ("yes" == window.tcart_initted) {
+        window.tcart.amount = summa;
+        window.tcart.prodamount = summa;
+        window.tcart.total = summa;
+
+        window.tcart.products[0] = {
+            amount: summa,
+            name: 'Услуга по пошиву ' + length,
+            price: summa,
+            quantity: 1
+        };
+        return
+    } else {
+        var cart_main_div = $(".t706").parent("div").attr("id");
+        var div_num = cart_main_div.slice(3);
+        t_onFuncLoad('tcart__init', function () {
+            tcart__init(div_num, '');
+            setTimeout(calc_total(length, summa), 200)
+        });
+    }
+
+}
+//отправка статистики
+
+function closeIt() {
+    var linkClick = false;
+    $("a").bind("click", () => {
+        linkClick = true;
+    });
+
+    window.onbeforeunload = () => {
+        if (!linkClick) {
+            localStorage.status = 'Закрыли вкладку';
+        }
+    };
+    if (!sessionStorage.getItem('status')) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '../statistics.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.send('statistics=' + encodeURIComponent(choiceGetJson));
+        e.preventDefault();
+    }
+}
+window.onbeforeunload = closeIt;

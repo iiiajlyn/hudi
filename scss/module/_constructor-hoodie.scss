@@ -138,11 +138,18 @@
                 display: none;
             }
 
+            @media screen and (max-width: 1000px) {
+                // p {
+                //     display: block;
+                // }
+            }
+
             &::before {
                 background-image: url("../img/shopping-bag.png");
                 background-image: url("../img/svg/shopping-bag.svg");
                 padding: 0;
                 margin: 0;
+
             }
 
             &.active {
@@ -185,16 +192,20 @@
         border-radius: $radius;
         transition: $transition;
         margin-bottom: 10px;
+        white-space: nowrap;
 
         @media screen and (max-width: 1000px) {
-            margin-bottom: 10px;
-            padding: 20px;
-            background-position: center;
-            background-color: transparent;
+            background-color: rgb(0 0 0 / 5%);
+            padding: 10px 15px;
+            padding-left: 43px;
+            // margin-bottom: 10px;
+            // padding: 20px;
+            // background-position: center;
+            // background-color: transparent;
 
-            p {
-                display: none;
-            }
+            // p {
+            //     display: none;
+            // }
         }
 
         &:hover {
@@ -308,13 +319,18 @@
 
         .title-choice {
             text-align: center;
-            padding: 16px;
+            padding: 15px;
             position: absolute;
             width: 100%;
             opacity: 0;
             z-index: 10;
             display: flex;
-            margin-left: 26px;
+            white-space: nowrap;
+
+            @media screen and (min-width: 1000px) {
+                margin-left: 26px;
+
+            }
 
             &.title-anim {
                 animation: title-anim 3s normal forwards ease-in-out;
@@ -327,11 +343,13 @@
                 border-radius: $radius;
                 padding: 9px 16px;
                 font-weight: 600;
+                white-space: nowrap;
             }
 
             b {
                 color: $palete-light;
                 font-weight: 600;
+                white-space: nowrap;
             }
         }
 
@@ -565,8 +583,8 @@
 
                 @media screen and (max-width: 1000px) {
                     padding: 0 20px;
-                    margin: 20px 35px;
-                    width: calc(100% - 70px);
+                    margin: 20px 30px;
+                    width: calc(100% - 60px);
                     margin-bottom: 0;
                     //
                     margin-top: 10px;
@@ -668,6 +686,7 @@
                     color: $palete-dark;
                     text-decoration: none;
                     font-weight: 600;
+
                 }
 
                 .current {
@@ -1256,20 +1275,30 @@
                     padding-bottom: 10px;
                     border-top: none;
                     height: auto;
-                    margin: 0 15px;
+                    margin: 0 10px;
                 }
 
                 .btn-box {
                     display: flex;
 
                     .btn_next {
-                        @media screen and (max-width: 1000px) {
-                            display: none;
-                        }
-                    }
+                        margin-right: 5px;
+                        position: relative;
 
-                    a {
-                        margin-right: 10px;
+                        @media screen and (max-width: 1000px) {
+                            &::after {
+                                content: "";
+                                display: block;
+                                width: 100%;
+                                height: 100%;
+                                margin-left: 0px;
+                                border-left: 0px;
+                                border-bottom: 0px;
+                                transform: rotate(0deg);
+                                position: absolute;
+                                left: 0;
+                            }
+                        }
                     }
                 }
 
@@ -1387,11 +1416,12 @@
 
                     &__img {
                         width: 180px;
-                        height: 100%;
+                        height: calc(100% + 15px);
                         position: relative;
                         margin-right: -20px;
                         margin-bottom: -20px;
                         margin-left: -10px;
+                        margin-top: -8px;
 
                         >div {
                             position: absolute;
@@ -1661,6 +1691,10 @@
                     font-size: $font-m;
                     width: 100%;
                     border: 1px solid $palete-light-second;
+
+                    @media screen and (max-width: 1000px) {
+                        background-color: $palete-light-second;
+                    }
                 }
 
                 label {

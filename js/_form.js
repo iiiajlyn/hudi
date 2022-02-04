@@ -79,7 +79,7 @@ function modalForm() {
                     resolve(submitInfo = document.querySelector(".submit-modal"))
                 });
                 promise.then(
-                    function (result) {
+                    function () {
                         if (data == "yes") {
                             submitInfo.classList.add("yes");
                             document.getElementById("price-info").innerHTML = finalPrice + " руб."
