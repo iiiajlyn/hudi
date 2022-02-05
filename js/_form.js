@@ -86,6 +86,7 @@ function modalForm() {
                             document.getElementById("price-economy").innerHTML = (14990 - finalPrice) + " руб."
                             prevForm.classList.add("none")
                             deleteCookie('hudi');
+                            deleteCookie('hudiColor');
                         }
 
                         else {

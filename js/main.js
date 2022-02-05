@@ -456,15 +456,6 @@ async function choiceActive() {
     basePriceHTML();
     cookieAdd();
 }
-// $('.parameters-box__head').on('translated.owl.carousel', function () {
-//     let nextElem = document.querySelector(".owl-item.active.center").nextElementSibling.childNodes[0].getAttribute("data-hash")
-//     if (!(nextElem == false)) {
-//         btnNext.href = "#" + nextElem
-//     } else {
-//         btnNext.href = "#"
-//     }
-//     // btnNext.classList.add("disable")
-// })
 //Рандомные числа
 let numRandomArr = document.querySelectorAll(".choice__info-box .num-random"),
     numRandom = Math.floor(Math.random() * 17) + 8;
