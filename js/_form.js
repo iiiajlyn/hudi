@@ -80,7 +80,7 @@ function modalForm() {
                 });
                 promise.then(
                     function () {
-                        if (data == "yes") {
+                        if (typeof(data.deal_id)!="undefined") {
                             submitInfo.classList.add("yes");
                             document.getElementById("price-info").innerHTML = finalPrice + " руб."
                             document.getElementById("price-economy").innerHTML = (14990 - finalPrice) + " руб."
