@@ -66,7 +66,7 @@ function modalForm() {
         $.ajax({
 
             type: "POST",
-            url: "/form.php",
+            url: "https://nautz.ru/api/bitrix/newConstructor",
             data: $("#modal-form").serialize(),
             success: async function (data) {
                 const promise = new Promise(async (resolve, reject) => {
@@ -84,9 +84,35 @@ function modalForm() {
                             submitInfo.classList.add("yes");
                             document.getElementById("price-info").innerHTML = finalPrice + " руб."
                             document.getElementById("price-economy").innerHTML = (14990 - finalPrice) + " руб."
+                            document.getElementsByName("orderId")[0].value = data.deal_id
                             prevForm.classList.add("none")
                             deleteCookie('hudi');
                             deleteCookie('hudiColor');
+
+                            // отправили форму
+                            var date_for_event = new Date();
+                            var eventId = "mev"+date_for_event.getTime();
+                            window.customData = {}
+                            window.customData.product_data = {
+                                'currency':'RUB',
+                                'value':window.tcart.amount,
+                                'order_id':data.deal_id
+                            };
+
+                            if (!window.fblead){
+                                sendFacebookEvents('Lead',eventId,window.customData);
+                            }
+                            if (typeof(fbq) != "undefined" && !window.fblead) {
+                                fbq('track', 'Lead',{},{eventID: eventId});
+                                window.fblead = true;
+                            }
+
+                            if (typeof(window.gtag) != "undefined") {
+                                gtag( 'event', 'order_form', {'value': window.tcart.amount} );
+                            }
+                            if (typeof(window.ym) != "undefined") {
+                                ym(66248908,'reachGoal','order_form');
+                            }
                         }
 
                         else {
