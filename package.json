@@ -28,6 +28,7 @@
     },
     "dependencies": {
         "animate.css": "^4.1.1",
+        "core-js": "^3.21.0",
         "owl.carousel2": "^2.2.2"
     }
 }

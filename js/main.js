@@ -2,7 +2,6 @@
 if (document.location.hash) {
     document.location.hash = ""
 }
-
 //слайдер
 $('.parameters-box__head').owlCarousel({
     loop: false,
@@ -239,7 +238,8 @@ document.querySelector(".choice [data-choice=fastener]").parentNode.classList.ad
 let choiceElem,
     zipper = false,
     itemNum = 0,
-    choiceGetJson = getCookie('hudi', json = true);
+    cookieName = 'hudi',
+    choiceGetJson = getCookie(cookieName, json = true);
 
 if (choiceGetJson) {
     choiceElem = choiceGetJson;
@@ -503,8 +503,8 @@ async function modalAdd() {
             modal.classList.add("full");
             calc_total("Худи", finalPrice)
             // закончил квиз
-            if (typeof(window.ym) != "undefined") {
-                ym(66248908,'reachGoal','quiz_finish')
+            if (typeof (window.ym) != "undefined") {
+                ym(66248908, 'reachGoal', 'quiz_finish')
             }
         } else {
             modal.classList.remove("full");
@@ -572,7 +572,7 @@ function clickPrevNone() {
 //Пишем куки
 function cookieAdd() {
     let choiceSetJson = JSON.stringify(choiceElem);
-    setCookie('hudi', choiceSetJson, { expires: Date(14) });
+    setCookie(cookieName, choiceSetJson, { expires: Date(14) });
 }
 //Заполняем прогресс констуктора из кук
 async function startHudi() {
@@ -755,39 +755,40 @@ function choiceImginfoAdd() {
 function choiceImginfoDel() {
     this.removeChild(choiceImgInfo)
 }
-//-----
+//Нужно раскомментировать
 function calc_total(length, summa) {
 
-    if ("yes" == window.tcart_initted) {
-        window.tcart.amount = summa;
-        window.tcart.prodamount = summa;
-        window.tcart.total = summa;
+    /*
+        if ("yes" == window.tcart_initted) {
+            window.tcart.amount = summa;
+            window.tcart.prodamount = summa;
+            window.tcart.total = summa;
 
-        window.tcart.products[0] = {
-            amount: summa,
-            name: 'Услуга по пошиву ' + length,
-            price: summa,
-            quantity: 1
-        };
-        return
-    } else {
-        var cart_main_div = $(".t706").parent("div").attr("id");
-        var div_num = cart_main_div.slice(3);
-        t_onFuncLoad('tcart__init', function () {
-            tcart__init(div_num, '');
-            setTimeout(calc_total(length, summa), 200)
-        });
-    }
+            window.tcart.products[0] = {
+                amount: summa,
+                name: 'Услуга по пошиву ' + length,
+                price: summa,
+                quantity: 1
+            };
+            return
+        } else {
+            var cart_main_div = $(".t706").parent("div").attr("id");
+            var div_num = cart_main_div.slice(3);
+            t_onFuncLoad('tcart__init', function () {
+                tcart__init(div_num, '');
+                setTimeout(calc_total(length, summa), 200)
+            });
+        } */
 
 }
-function sendFacebookEvents(event,event_id,customData){
+function sendFacebookEvents(event, event_id, customData) {
     var data_to_send = {
-        "clientUserAgent":window.navigator.userAgent,
-        "fbp":getCookie("_fbp"),
-        "url":window.location.href,
-        "event":event,
-        "event_id":event_id,
-        "customData":customData,
+        "clientUserAgent": window.navigator.userAgent,
+        "fbp": getCookie("_fbp"),
+        "url": window.location.href,
+        "event": event,
+        "event_id": event_id,
+        "customData": customData,
     }
     $.ajax({
         url: 'https://nautz.ru/api/facebook_test_test',
@@ -795,49 +796,49 @@ function sendFacebookEvents(event,event_id,customData){
         dataType: 'json',
         data: data_to_send,
     })
-    .done(function(data) {
+        .done(function (data) {
 
-    })
-    .fail(function(data) {
-        // console.log("error");
-    })
-    .always(function() {
-        // console.log("complete");
-    });
+        })
+        .fail(function (data) {
+            // console.log("error");
+        })
+        .always(function () {
+            // console.log("complete");
+        });
 }
 // зашли на страницу
 var pv = 0
-if(pv==0){
+if (pv == 0) {
     var date_for_event = new Date();
-    var eventId = "mev"+date_for_event.getTime();
-    if(typeof(fbq)!="undefined"){
-        fbq('track', 'PageView',{},{eventID: eventId});
+    var eventId = "mev" + date_for_event.getTime();
+    if (typeof (fbq) != "undefined") {
+        fbq('track', 'PageView', {}, { eventID: eventId });
     }
-    sendFacebookEvents('PageView',eventId);
+    sendFacebookEvents('PageView', eventId);
 
     // начал квиз
-    if (typeof(window.gtag) != "undefined") {
-        gtag( 'event', 'start_quiz' );
+    if (typeof (window.gtag) != "undefined") {
+        gtag('event', 'start_quiz');
     }
-    if (typeof(window.ym) != "undefined") {
-        ym(66248908,'reachGoal','start_quiz')
+    if (typeof (window.ym) != "undefined") {
+        ym(66248908, 'reachGoal', 'start_quiz')
     }
     pv++
 }
 // начал оплату
-$('.constructor-hoodie').on('click','#formnewconstructor button',function(e){
+$('.constructor-hoodie').on('click', '#formnewconstructor button', function (e) {
     var date_for_event = new Date();
-    var eventId = "mev"+date_for_event.getTime();
-    if(typeof(fbq)!="undefined"){
-        fbq('track', 'InitiateCheckout',{},{eventID: eventId});
+    var eventId = "mev" + date_for_event.getTime();
+    if (typeof (fbq) != "undefined") {
+        fbq('track', 'InitiateCheckout', {}, { eventID: eventId });
     }
-    sendFacebookEvents('InitiateCheckout',eventId,window.customData);
+    sendFacebookEvents('InitiateCheckout', eventId, window.customData);
 
-    if(typeof(window.gtag)!="undefined"){
-        gtag( 'event', 'startpayment', {'value': window.tcart.amount} );
+    if (typeof (window.gtag) != "undefined") {
+        gtag('event', 'startpayment', { 'value': window.tcart.amount });
     }
-    if(typeof(window.ym)!="undefined"){
-        ym(66248908,'reachGoal','startpayment');
+    if (typeof (window.ym) != "undefined") {
+        ym(66248908, 'reachGoal', 'startpayment');
     }
 })
 //отправка статистики
