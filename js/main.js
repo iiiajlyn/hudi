@@ -252,8 +252,8 @@ if (choiceGetJson) {
         pocket: ["kenguru", "Кенгуру", false, 0],
         cuff: ["kashkorse", "Декоративная резинка кашкорсе", false, 0],
         hood: ["vnakhlest-bez-verovok", "Внахлест без веревок", false, 0],
-        cloth: ["yes", "С начесом - теплый", false, 0],
-        embroidery: ["no", "Не выбран", false, 0],
+        cloth: ["no", "Без начеса", false, 1000],
+        // embroidery: ["no", "Не выбран", false, 0],
         size: ["no", "Не выбран", false, 0],
         growth: ["no", "Не выбран", false, 0],
     }
@@ -672,7 +672,7 @@ async function startHudi() {
 }
 startHudi();
 progres();
-
+basePriceHTML()
 //рандом
 let randomBtn = document.getElementById("random-btn");
 randomBtn.onclick = randomHudi;
@@ -744,7 +744,7 @@ function choiceImginfoAdd() {
         info = this.dataset.title,
         price = this.dataset.price;
     if (this.dataset.price) {
-        choiceImgInfo.innerHTML = `<p>${info}</p><span>${price} руб.</span>`
+        choiceImgInfo.innerHTML = `<p>${info}</p><span>${price} ₽</span>`
     }
     else {
         choiceImgInfo.innerHTML = `<p>${info}</p>`
@@ -863,3 +863,10 @@ function closeIt() {
     }
 }
 window.onbeforeunload = closeIt;
+
+/* отправка статистики
+let analyticsData = choiceElem;
+window.addEventListener("unload", function () {
+    navigator.sendBeacon("../statistics.php", JSON.stringify(analyticsData));
+});
+ */
