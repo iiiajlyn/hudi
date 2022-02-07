@@ -1442,6 +1442,7 @@
                         .title {
                             font-size: $font-x;
                             padding-bottom: 10px;
+                            font-weight: 600;
                         }
 
                         .price {
@@ -1459,13 +1460,14 @@
                     &__params {
                         li {
                             display: flex;
-                            line-height: 1.4;
+                            line-height: 1.6;
                             font-size: $font-s;
                         }
 
                         b {
                             display: inline-flex;
-                            width: 86px
+                            width: 86px;
+                            font-weight: 600;
                         }
                     }
                 }

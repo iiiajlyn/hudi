@@ -864,6 +864,7 @@ function closeIt() {
 }
 window.onbeforeunload = closeIt;
 
+
 /* отправка статистики
 let analyticsData = choiceElem;
 window.addEventListener("unload", function () {

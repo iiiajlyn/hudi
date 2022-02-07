@@ -37,7 +37,7 @@ function scriptsIndex() {
 }
 
 function scripts() {
-    scriptsIndex()
+    return scriptsIndex()
 }
 function styles() {
     return src('scss/*.min.scss')
