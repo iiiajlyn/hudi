@@ -217,8 +217,8 @@ function progres() {
     }
 }
 //Формирование цены
-let basePrice = 2990,
-    finalPrice = 2990,
+let basePrice = 3990,
+    finalPrice = 3990,
     basePriceElem = document.querySelector(".parameters-box__footer .price span");
 function basePriceHTML() {
     let priceItem = basePrice;
@@ -506,6 +506,8 @@ async function modalAdd() {
             if (typeof (window.ym) != "undefined") {
                 ym(66248908, 'reachGoal', 'quiz_finish')
             }
+            window.statisticDataSendedCounter = 1
+            closeIt()
         } else {
             modal.classList.remove("full");
         }
@@ -524,6 +526,7 @@ async function modalAdd() {
 }
 
 function modalDel() {
+    window.cli_session = uuidv4();
     modal.classList.add("del")
     setTimeout(function () {
         modal.classList.remove("del")
@@ -676,6 +679,7 @@ basePriceHTML()
 //рандом
 let randomBtn = document.getElementById("random-btn");
 randomBtn.onclick = randomHudi;
+window.imLuckyCounter = 0
 function randomHudi() {
     for (let key in parametersAllArr) {
         let element = parametersAllArr[key];
@@ -700,6 +704,8 @@ function randomHudi() {
     if (choiceElem["length"][0] === "short" && choiceElem["pocket"][0] === "bokovie") {
         choiceElem["pocket"][0] = "kenguru";
     }
+    window.imLuckyCounter++;
+    localStorage.imLuckyCounter = window.imLuckyCounter
     startHudi();
     basePriceHTML();
     cookieAdd();
@@ -840,9 +846,29 @@ $('.constructor-hoodie').on('click', '#formnewconstructor button', function (e) 
     if (typeof (window.ym) != "undefined") {
         ym(66248908, 'reachGoal', 'startpayment');
     }
+    window.statisticDataSendedCounter = 3
+    closeIt()
 })
 //отправка статистики
-
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+function mevGetCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2){ // если _ga найден в строке кук
+        return parts.pop().split(';').shift();
+    } else if(name=="_ga") { // если не найден, генерируем свой uid
+        let _ga = uuidv4();
+        setCookie("_ga", _ga, { expires: Date(14) });
+        return _ga;
+    }else{
+        return;
+    }
+}
 function closeIt() {
     var linkClick = false;
     $("a").bind("click", () => {
@@ -855,14 +881,31 @@ function closeIt() {
         }
     };
     if (!sessionStorage.getItem('status')) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '../statistics.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send('statistics=' + encodeURIComponent(choiceGetJson));
-        e.preventDefault();
+        var analyticsData = {
+            'params':Object.assign({}, choiceElem)
+        };
+        var mne_povez = false
+        if(!localStorage.getItem('imLuckyCounter')){
+            if(window.imLuckyCounter>0) mne_povez = true
+            analyticsData.params.mne_povezet = [window.imLuckyCounter,window.imLuckyCounter,mne_povez]
+        }else{
+            if(localStorage.getItem('imLuckyCounter')>0) mne_povez = true
+            analyticsData.params.mne_povezet = [localStorage.getItem('imLuckyCounter'),localStorage.getItem('imLuckyCounter'),mne_povez]
+        }
+        
+        analyticsData.constructor_id = 'hudi'
+        analyticsData.uid = mevGetCookie("_ga")
+        analyticsData.url = window.location.href
+        analyticsData.session_id = window.cli_session
+        analyticsData.statisticDataSendedCounter = window.statisticDataSendedCounter
+        var data = analyticsData
+        $.post( "http://nautz.loc/api/bitrix/newConstructorStata", data, function(data ){ 
+            
+        })
     }
 }
-window.onbeforeunload = closeIt;
+window.cli_session = uuidv4();
+// window.onbeforeunload = closeIt;
 
 
 /* отправка статистики
